@@ -12,7 +12,7 @@ import datetime as dt
 PATH_TO_ORIGINAL_DATA = '/content/'
 PATH_TO_PROCESSED_DATA = '/content/'
 
-data = pd.read_csv(PATH_TO_ORIGINAL_DATA + 'sampled_buys.csv', sep=',', header=None, usecols=[0,1,2,3], dtype={0:np.int32, 1:np.int32, 2:str, 3:np.int64})
+data = pd.read_csv(PATH_TO_ORIGINAL_DATA + 'sampled_clicks.csv', sep=',', header=None, usecols=[0,1,2,3], dtype={0:np.int32, 1:np.int32, 2:str, 3:np.int64})
 data.columns = ['Index','SessionId', 'TimeStr', 'ItemId']
 data['Time'] = data.TimeStr.apply(lambda x: dt.datetime.strptime(x, '%Y-%m-%dT%H:%M:%S.%fZ').timestamp()) #This is not UTC. It does not really matter.
 del(data['TimeStr'])
