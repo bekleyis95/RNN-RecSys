@@ -6,7 +6,7 @@ Created on Wed Apr  6 18:14:46 2016
 """
 
 import sys
-sys.path.append('../..')
+sys.path.append('/content/RNN-RecSys/')
 
 import numpy as np
 import pandas as pd
