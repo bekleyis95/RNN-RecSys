@@ -162,11 +162,11 @@ if __name__ == '__main__':
         print( k, ' time: ', ( time.time() - ts) )
         res[k] = eval.evaluate_sessions(a, metric, test, train)
         res_buys[k] = eval_buys.evaluate_sessions(a, metric, test, train, buys)
-        x, l = res[k].items()
+        x, l = res.items()[k]
         print("Validation:")
         for e in l:
             print(x, ':', e[0], ' ', e[1])
-        x, l = res_buys[k].items()
+        x, l = res_buys.items()[k]
         print("Buys Validation:")
         for e in l:
             print(x, ':', e[0], ' ', e[1])
