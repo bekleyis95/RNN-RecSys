@@ -20,6 +20,7 @@ from algorithms.filemodel import filemodel as fm
 from algorithms.hybrid import weighted as wh
 
 from evaluation import evaluation as eval
+from evaluation import evaluation_buys as eval_buys
 from evaluation import loader as loader
 from evaluation.metrics import accuracy as ac
 from evaluation.metrics import artist_coherence as coh
@@ -36,6 +37,7 @@ if __name__ == '__main__':
     '''
     data_path = '/content/'
     file_prefix = 'yoochoose_clicks_sampled'
+    buys_prefix = 'yoochoose_buys_sampled'
 
     limit_train = None #limit in number of rows or None
     limit_test = None #limit in number of rows or None
@@ -81,15 +83,7 @@ if __name__ == '__main__':
     ara = ar.AssosiationRules();
     algs['ar'] = ara
 
-    # gr4rec2
-
-    gru = gru4rec2.GRU4Rec(n_epochs=10, loss='bpr-max-0.5', final_act='linear', hidden_act='tanh', layers=[100],
-                           batch_size=32, dropout_p_hidden=0.0, learning_rate=0.2, momentum=0.5, n_sample=2048,
-                           sample_alpha=0, time_sort=True)
-    algs['gru-100-bpr-max-0.5'] = gru
-
     #knn
-    '''
     iknn = iknn.ItemKNN()
     algs['iknn'] = iknn
      
@@ -136,21 +130,29 @@ if __name__ == '__main__':
      
     hybrid = wh.WeightedHybrid( [vsknn.VMContextKNN( 100, 2000 ), sr.SequentialRules()], [0.5,0.5], fit=True )
     algs['whybrid-test-50-50-fit'] = hybrid;
+
+    # gr4rec2
+
+    gru = gru4rec2.GRU4Rec(n_epochs=10, loss='bpr-max-0.5', final_act='linear', hidden_act='tanh', layers=[100],
+                           batch_size=32, dropout_p_hidden=0.0, learning_rate=0.2, momentum=0.5, n_sample=2048,
+                           sample_alpha=0, time_sort=True)
+    algs['gru-100-bpr-max-0.5'] = gru
+
     '''
     
-    '''
     Execution
     '''
     #load data
     train, test = loader.load_data( data_path, file_prefix, rows_train=limit_train, rows_test=limit_test, density=density_value )
-    
+    buys = loader.load_buys(data_path, buys_prefix)
     item_ids = train.ItemId.unique()
     
     #init metrics
     for m in metric:
         m.init( train )
     # result dict
-    res = {};
+    res = {}
+    res_buys = {}
 
     #train algorithms
     for k,a in algs.items():
@@ -159,10 +161,16 @@ if __name__ == '__main__':
         a.fit( train )
         print( k, ' time: ', ( time.time() - ts) )
         res[k] = eval.evaluate_sessions(a, metric, test, train)
-        for x, l in res.items():
-            for e in l:
-                print(x, ':', e[0], ' ', e[1])
-        #print( k, ' memory: ', asizeof.asizeof(a) )
+        res_buys[k] = eval_buys.evaluate_sessions(a, metric, test, train, buys)
+        x, l = res[k].items()
+        print("Validation:")
+        for e in l:
+            print(x, ':', e[0], ' ', e[1])
+        x, l = res_buys[k].items()
+        print("Buys Validation:")
+        for e in l:
+            print(x, ':', e[0], ' ', e[1])
+
     
 
      

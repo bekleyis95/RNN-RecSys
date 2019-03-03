@@ -10,14 +10,14 @@ preprocessing method ["info","org","days_test","slice"]
     slice: new (create multiple train-test-combinations with a sliding window approach  
     buys: load buys and safe file to prepared
 '''
-METHOD = "org"
+METHOD = "buys"
 
 '''
 data config (all methods)
 '''
 PATH = '/content/'
 PATH_PROCESSED = '/content/'
-FILE = 'yoochoose_clicks_sampled'
+FILE = 'yoochoose_buys_sampled'
 
 '''
 org_min_date config
