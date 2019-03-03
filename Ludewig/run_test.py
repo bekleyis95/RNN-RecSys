@@ -34,8 +34,8 @@ if __name__ == '__main__':
     '''
     Configuration for a single split run
     '''
-    data_path = 'data/rsc15/single/'
-    file_prefix = 'rsc15-clicks'
+    data_path = '/content/'
+    file_prefix = 'yoochoose_clicks_sampled'
 
     limit_train = None #limit in number of rows or None
     limit_test = None #limit in number of rows or None
@@ -80,9 +80,16 @@ if __name__ == '__main__':
       
     ara = ar.AssosiationRules();
     algs['ar'] = ara
-     
+
+    # gr4rec2
+
+    gru = gru4rec2.GRU4Rec(n_epochs=10, loss='bpr-max-0.5', final_act='linear', hidden_act='tanh', layers=[100],
+                           batch_size=32, dropout_p_hidden=0.0, learning_rate=0.2, momentum=0.5, n_sample=2048,
+                           sample_alpha=0, time_sort=True)
+    algs['gru-100-bpr-max-0.5'] = gru
+
     #knn
-     
+    '''
     iknn = iknn.ItemKNN()
     algs['iknn'] = iknn
      
@@ -97,11 +104,7 @@ if __name__ == '__main__':
      
     sfsknn = sfsknn.SeqFilterContextKNN( 100, 500, similarity="cosine", extend=False )
     algs['sfsknn-100-500-cosine-div'] = ssknn
-        
-    #gr4rec2
-    
-    gru = gru4rec2.GRU4Rec(n_epochs=10, loss='bpr-max-0.5', final_act='linear', hidden_act='tanh', layers=[100], batch_size=32, dropout_p_hidden=0.0, learning_rate=0.2, momentum=0.5, n_sample=2048, sample_alpha=0, time_sort=True)
-    algs['gru-100-bpr-max-0.5'] = gru
+
     
     #session mf
     
@@ -133,7 +136,7 @@ if __name__ == '__main__':
      
     hybrid = wh.WeightedHybrid( [vsknn.VMContextKNN( 100, 2000 ), sr.SequentialRules()], [0.5,0.5], fit=True )
     algs['whybrid-test-50-50-fit'] = hybrid;
-
+    '''
     
     '''
     Execution
@@ -146,26 +149,22 @@ if __name__ == '__main__':
     #init metrics
     for m in metric:
         m.init( train )
-    
+    # result dict
+    res = {};
+
     #train algorithms
     for k,a in algs.items():
         ts = time.time()
         print( "    fit ", k ) 
         a.fit( train )
-        #print( k, ' time: ', ( time.time() - ts) )
+        print( k, ' time: ', ( time.time() - ts) )
+        res[k] = eval.evaluate_sessions(a, metric, test, train)
+        for x, l in res.items():
+            for e in l:
+                print(x, ':', e[0], ' ', e[1])
         #print( k, ' memory: ', asizeof.asizeof(a) )
     
-    #result dict
-    res = {};
-    
-    #evaluation
-    for k, a in algs.items():
-        res[k] = eval.evaluate_sessions( a, metric, test, train )
-    
-    #print results
-    for k, l in res.items():
-        for e in l:
-            print( k, ':', e[0], ' ', e[1] )
+
      
      
     if export_csv is not None:
