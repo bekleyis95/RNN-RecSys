@@ -92,7 +92,7 @@ if __name__ == '__main__':
     algs['gru-100-bpr-max-0.5'] = gru
 
 
-'''
+    '''
 
     # weighted example
 
@@ -142,12 +142,8 @@ if __name__ == '__main__':
     adpt = ad.Adapter(algo='fpmc')
     algs['fpmc'] = adpt
     
-'''
+    '''
 
-    '''
-    
-    Execution
-    '''
     #load data
     train, test = loader.load_data( data_path, file_prefix, rows_train=limit_train, rows_test=limit_test, density=density_value )
     buys = loader.load_buys(data_path, buys_prefix)
