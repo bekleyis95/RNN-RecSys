@@ -17,7 +17,7 @@ data config (all methods)
 '''
 PATH = '/content/'
 PATH_PROCESSED = '/content/'
-FILE = 'rsc15-clicks'
+FILE = 'yoochoose_clicks_sampled'
 
 '''
 org_min_date config
