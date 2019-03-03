@@ -15,8 +15,8 @@ METHOD = "org"
 '''
 data config (all methods)
 '''
-PATH = 'data/rsc15/raw/'
-PATH_PROCESSED = 'data/rsc15/single/'
+PATH = '/content/'
+PATH_PROCESSED = '/content/'
 FILE = 'rsc15-clicks'
 
 '''
