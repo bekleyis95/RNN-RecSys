@@ -90,7 +90,18 @@ if __name__ == '__main__':
                            batch_size=32, dropout_p_hidden=0.0, learning_rate=0.2, momentum=0.5, n_sample=2048,
                            sample_alpha=0, time_sort=True)
     algs['gru-100-bpr-max-0.5'] = gru
+
+
 '''
+
+    # weighted example
+
+    hybrid = wh.WeightedHybrid([vmsknn, sra], [0.5, 0.5], fit=False)
+    algs['whybrid-test-50-50'] = hybrid;
+
+    hybrid = wh.WeightedHybrid([vsknn.VMContextKNN(100, 2000), sr.SequentialRules()], [0.5, 0.5], fit=True)
+    algs['whybrid-test-50-50-fit'] = hybrid;
+    
     #knn
     iknn = iknn.ItemKNN()
     algs['iknn'] = iknn
@@ -106,7 +117,7 @@ if __name__ == '__main__':
      
     sfsknn = sfsknn.SeqFilterContextKNN( 100, 500, similarity="cosine", extend=False )
     algs['sfsknn-100-500-cosine-div'] = ssknn
-'''
+
     
     #session mf
     
@@ -131,14 +142,7 @@ if __name__ == '__main__':
     adpt = ad.Adapter(algo='fpmc')
     algs['fpmc'] = adpt
     
-    #weighted example
-
-    hybrid = wh.WeightedHybrid( [vmsknn, sra], [0.5,0.5], fit=False )
-    algs['whybrid-test-50-50'] = hybrid;
-     
-    hybrid = wh.WeightedHybrid( [vsknn.VMContextKNN( 100, 2000 ), sr.SequentialRules()], [0.5,0.5], fit=True )
-    algs['whybrid-test-50-50-fit'] = hybrid;
-
+'''
 
     '''
     
