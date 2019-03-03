@@ -82,7 +82,7 @@ if __name__ == '__main__':
       
     ara = ar.AssosiationRules();
     algs['ar'] = ara
-
+'''
     #knn
     iknn = iknn.ItemKNN()
     algs['iknn'] = iknn
@@ -98,7 +98,7 @@ if __name__ == '__main__':
      
     sfsknn = sfsknn.SeqFilterContextKNN( 100, 500, similarity="cosine", extend=False )
     algs['sfsknn-100-500-cosine-div'] = ssknn
-
+'''
     
     #session mf
     
