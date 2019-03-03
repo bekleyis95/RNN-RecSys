@@ -82,6 +82,14 @@ if __name__ == '__main__':
       
     ara = ar.AssosiationRules();
     algs['ar'] = ara
+
+
+    # gr4rec2
+
+    gru = gru4rec2.GRU4Rec(n_epochs=10, loss='bpr-max-0.5', final_act='linear', hidden_act='tanh', layers=[100],
+                           batch_size=32, dropout_p_hidden=0.0, learning_rate=0.2, momentum=0.5, n_sample=2048,
+                           sample_alpha=0, time_sort=True)
+    algs['gru-100-bpr-max-0.5'] = gru
 '''
     #knn
     iknn = iknn.ItemKNN()
@@ -131,12 +139,6 @@ if __name__ == '__main__':
     hybrid = wh.WeightedHybrid( [vsknn.VMContextKNN( 100, 2000 ), sr.SequentialRules()], [0.5,0.5], fit=True )
     algs['whybrid-test-50-50-fit'] = hybrid;
 
-    # gr4rec2
-
-    gru = gru4rec2.GRU4Rec(n_epochs=10, loss='bpr-max-0.5', final_act='linear', hidden_act='tanh', layers=[100],
-                           batch_size=32, dropout_p_hidden=0.0, learning_rate=0.2, momentum=0.5, n_sample=2048,
-                           sample_alpha=0, time_sort=True)
-    algs['gru-100-bpr-max-0.5'] = gru
 
     '''
     
