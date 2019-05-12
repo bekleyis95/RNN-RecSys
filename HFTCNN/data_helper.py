@@ -88,17 +88,17 @@ def embedding_weights_load(words_map,embedding_weights_path):
         pre_trained_embedding = "bin"
     except:
         print ("fastText binary file (.bin) is not found!")
-        if os.path.exists("/content/wiki.en.vec"):
+        if os.path.exists("./Word_embedding/wiki.en.vec"):
             print ("Using wikipedia(en) pre-trained word vectors.")
         else:
             print ("Downloading wikipedia(en) pre-trained word vectors.")
-            #chakin.download(number=2, save_dir="./Word_embedding")
+            @chakin.download(number=2, save_dir="./Word_embedding")
         print ("Loading vectors...")
-        if os.path.exists("/content/Word_embedding_model.pkl"):
+        if os.path.exists("./Word_embedding_model.pkl"):
             with open("./Word_embedding_model.pkl", mode="rb") as f:
                 model = pickle.load(f)
         else:
-            model =  KeyedVectors.load_word2vec_format('/content/wiki.en.vec')
+            model =  KeyedVectors.load_word2vec_format('./Word_embedding/wiki.en.vec')
             with open("Word_embedding_model.pkl", mode="wb") as f:
                 pickle.dump(model, f)
         pre_trained_embedding = "txt"
