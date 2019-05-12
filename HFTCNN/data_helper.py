@@ -98,7 +98,7 @@ def embedding_weights_load(words_map,embedding_weights_path):
             with open("./Word_embedding_model.pkl", mode="rb") as f:
                 model = pickle.load(f)
         else:
-            model =  KeyedVectors.load_word2vec_format('/content/Word_embedding/wiki.en.vec')
+            model =  KeyedVectors.load_word2vec_format('/content/wiki.en.vec')
             with open("Word_embedding_model.pkl", mode="wb") as f:
                 pickle.dump(model, f)
         pre_trained_embedding = "txt"
