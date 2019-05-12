@@ -5,7 +5,7 @@ import re
 from collections import defaultdict
 from itertools import chain
 
-import chakin
+#import chakin
 import numpy as np
 import scipy.sparse as sp
 from gensim.models import KeyedVectors
@@ -92,7 +92,7 @@ def embedding_weights_load(words_map,embedding_weights_path):
             print ("Using wikipedia(en) pre-trained word vectors.")
         else:
             print ("Downloading wikipedia(en) pre-trained word vectors.")
-            chakin.download(number=2, save_dir="./Word_embedding")
+            #chakin.download(number=2, save_dir="./Word_embedding")
         print ("Loading vectors...")
         if os.path.exists("./Word_embedding_model.pkl"):
             with open("./Word_embedding_model.pkl", mode="rb") as f:
